@@ -11,5 +11,8 @@ public class ChatMessageDTO {
     private String message;
     private LocalDateTime timestamp;
 
+    public Long getId;
+
+
     // Constructors and other methods, if needed
 }

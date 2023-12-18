@@ -4,15 +4,15 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <changeSet author="your_name_here" id="create-chat-message-table">
-        <createTable tableName="chat_message">
-            <column name="id" type="SERIAL">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="sender_id" type="VARCHAR(255)"/>
-            <column name="receiver_id" type="VARCHAR(255)"/>
-            <column name="message" type="VARCHAR(MAX)"/>
-            <column name="timestamp" type="TIMESTAMP"/>
-        </createTable>
+        <sql splitStatements="false">
+            CREATE TABLE chat_message (
+                                           id SERIAL PRIMARY KEY,
+                                           sender_id VARCHAR(255),
+                                           receiver_id VARCHAR(255),
+                                           message TEXT,
+                                           timestamp TIMESTAMP
+            );
+        </sql>
     </changeSet>
 
 </databaseChangeLog>

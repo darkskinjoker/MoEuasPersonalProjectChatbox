@@ -1,6 +1,5 @@
-package ee.mainor.MoEuasPersonalProjectChatbox.dto;
+package ee.mainor.MoEuasPersonalProjectChatbox.model;
 
-import ee.mainor.MoEuasPersonalProjectChatbox.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,10 +11,10 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@Table(name = "CHAT_MESSAGES")
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChatMessage {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,9 +23,7 @@ public class ChatMessage {
     private String message;
     private LocalDateTime timestamp;
 
-    @ManyToOne
-    @JoinColumn(name = "receiver_id")
-    private User receiver;
-
-    // Constructors, getters, and setters
+    public Long getId() {
+        return id;
+    }
 }

@@ -1,6 +1,6 @@
 package ee.mainor.MoEuasPersonalProjectChatbox.repository;
 
-import ee.mainor.MoEuasPersonalProjectChatbox.dto.ChatMessage;
+import ee.mainor.MoEuasPersonalProjectChatbox.model.ChatMessage;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
