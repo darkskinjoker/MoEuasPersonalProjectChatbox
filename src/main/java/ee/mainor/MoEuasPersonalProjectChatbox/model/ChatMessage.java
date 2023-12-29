@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ChatMessage {
 
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,7 +24,4 @@ public class ChatMessage {
     private String message;
     private LocalDateTime timestamp;
 
-    public Long getId() {
-        return id;
-    }
 }

@@ -8,11 +8,14 @@ import ee.mainor.MoEuasPersonalProjectChatbox.service.ChatMessageService;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.mockito.ArgumentMatchers.any;
+import java.time.LocalDateTime;
+
 import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 public class MoEuasPersonalProjectChatboxApplicationTests {
@@ -20,23 +23,42 @@ public class MoEuasPersonalProjectChatboxApplicationTests {
 	@Mock
 	private ChatMessageRepository chatMessageRepository;
 
+	@Autowired // Inject ChatMessageMapper
+	private ChatMessageMapper chatMessageMapper;
+
 	@InjectMocks
 	private ChatMessageService chatMessageService;
 
 	@Test
 	public void testSendMessage() {
-		// Mock behavior for ChatMessageMapper
-		ChatMessageDTO messageDto = new ChatMessageDTO(/* Set properties */);
-		ChatMessage chatMessageEntity = new ChatMessage(/* Set properties */);
+		// Create a message DTO to be sent
+		ChatMessageDTO messageDto = new ChatMessageDTO();
+		messageDto.setSenderId("senderId");
+		messageDto.setReceiverId("receiverId");
+		messageDto.setMessage("Hello!");
+		messageDto.setTimestamp(LocalDateTime.now());
 
-		when(ChatMessageMapper.toChatMessageEntity(messageDto)).thenReturn(chatMessageEntity);
+		// Mock behavior for ChatMessageMapper to convert DTO to Entity
+		ChatMessage chatMessageEntity = new ChatMessage();
+		chatMessageEntity.setId(1L);
+		chatMessageEntity.setSenderId(messageDto.getSenderId());
+		chatMessageEntity.setReceiverId(messageDto.getReceiverId());
+		chatMessageEntity.setMessage(messageDto.getMessage());
+		chatMessageEntity.setTimestamp(messageDto.getTimestamp());
 
-		// Call the method being tested
+		when(chatMessageMapper.toChatMessageEntity(messageDto)).thenReturn(chatMessageEntity);
+
+		// Mock behavior for chatMessageRepository's save method
+		when(chatMessageRepository.save(chatMessageEntity)).thenReturn(chatMessageEntity);
+
+		// Call the sendMessage method
 		ChatMessageDTO result = chatMessageService.sendMessage(messageDto);
 
-		// Add assertions here to verify the behavior of the service method
-		// For example:
+		// Validate that the returned DTO matches the sent message DTO
 		assertNotNull(result);
-		// Add more assertions based on your expected behavior
+		assertEquals(messageDto.getSenderId(), result.getSenderId());
+		assertEquals(messageDto.getReceiverId(), result.getReceiverId());
+		assertEquals(messageDto.getMessage(), result.getMessage());
+		// add more assertions
 	}
 }
