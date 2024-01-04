@@ -19,8 +19,9 @@ public class ChatMessageService {
     private final ChatMessageRepository chatMessageRepository;
     private final ChatMessageMapper chatMessageMapper;
 
-    public List<ChatMessage> getChatHistory(String senderId, String receiverId) {
-        return chatMessageRepository.findBySenderIdAndReceiverId(senderId, receiverId);
+    public List<ChatMessageDTO> getChatHistory(String senderId, String receiverId) {
+        List<ChatMessage> chatHistory = chatMessageRepository.findBySenderIdAndReceiverId(senderId, receiverId);
+        return chatMessageMapper.toChatMessageDtoList(chatHistory);
     }
 
     public ChatMessageDTO sendMessage(ChatMessageDTO messageDto) {

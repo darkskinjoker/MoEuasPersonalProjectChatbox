@@ -14,12 +14,12 @@ public class ChatMessageController {
 
     private final ChatMessageService chatMessageService;
 
-   /* @GetMapping("history")
+    @GetMapping("history") // Define the complete path for the endpoint
     public List<ChatMessageDTO> getChatHistory(
             @RequestParam("senderId") String senderId,
             @RequestParam("receiverId") String receiverId) {
         return chatMessageService.getChatHistory(senderId, receiverId);
-    }*/
+    }
 
     @GetMapping("{id}")
     public ChatMessageDTO getMessageById(@PathVariable Long id) {
